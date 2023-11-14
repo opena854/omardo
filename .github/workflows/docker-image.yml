@@ -15,6 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . -t $DOCKER_REPO_NAME:$(date +%s)
+      run: docker build . -t ${{ vars.DOCKER_REPO_NAME }}:$(date +%s)
     - name: Publish the Docker image
-      run: docker push $DOCKER_REPO_NAME
+      run: docker push ${{ vars.DOCKER_REPO_NAME }}
+
