@@ -18,5 +18,5 @@ jobs:
     - name: Build the Docker image
       run: docker build . -t ${{ vars.DOCKER_REPO_NAME }}:${{ env.tagname }}
     - name: Publish the Docker image
-      run: docker push ${{ vars.DOCKER_REPO_NAME }}:${{ env.tagname }}
+      run: docker push -a ${{ vars.DOCKER_REPO_NAME }}
 
