@@ -22,8 +22,8 @@ jobs:
         username: ${{ vars.DOCKER_USER }}
         password: ${{ secrets.DOCKER_SECRET }}
     - name: Build the Docker image
-      run: docker build . -t ${{ env.repo }}:${{ env.tagname }}
-    - run: docker tag ${{ env.repo }} ${{ env.repo }}:latest
+      run: docker build . -t ${{ env.repo }}:latest
+    - run: docker tag ${{ env.repo }} ${{ env.repo }}:${{ env.tagname }}
     - name: Publish the Docker image
       run: docker push -a ${{ env.repo }}
 
