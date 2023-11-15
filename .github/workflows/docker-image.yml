@@ -9,7 +9,6 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
     env:
       tagname: $(date +%s)
@@ -26,4 +25,12 @@ jobs:
     - run: docker tag ${{ env.repo }} ${{ env.repo }}:${{ env.tagname }}
     - name: Publish the Docker image
       run: docker push -a ${{ env.repo }}
-
+    - name: SSH Publish
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.CASA_HOST }}
+        username: ${{ secrets.CASA_USERNAME }}
+        key: ${{ secrets.CASA_KEY }}
+        script: |
+          cd /casa/omardo
+          echo ${{ secrets.CASA_PASSWORD }} | sudo -S sh refresh.sh
