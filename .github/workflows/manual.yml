@@ -40,7 +40,7 @@ jobs:
         key: ${{ secrets.CASA_KEY }}
         script: |
           cd /casa/omardo
-          sudo sh refresh.sh
+          sudo -S sh refresh.sh
           ${{ secrets.CASA_PASSWORD }}
           
               
