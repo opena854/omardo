@@ -1,0 +1,22 @@
+# This is a basic workflow that is manually triggered
+
+name: Manual Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+    - name: SSH Remote Commands
+      # You may pin to the exact commit or the version.
+      # uses: appleboy/ssh-action@55dabf81b49d4120609345970c91507e2d734799
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.CASA_HOST }}
+        username: ${{ secrets.CASA_USERNAME }}
+        key: ${{ secrets.CASA_KEY }}
+        script: |
+          cd /casa/omardo
+          echo ${{ secrets.CASA_PASSWORD }} | sudo -S sh refresh.sh
