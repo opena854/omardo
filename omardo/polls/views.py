@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -10,6 +11,10 @@ from .models import Question, Choice
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        kwargs["content_page"] = "polls/list.html"
+        return super().get_context_data(**kwargs)
 
     def get_queryset(self):
         """
@@ -37,6 +42,15 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
 
+def add(request):
+    return render(
+        request, 
+        "polls/index.html",
+        { 
+            "content_page": "polls/add.html" ,
+        },
+    )
+ 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -45,8 +59,9 @@ def vote(request, question_id):
         # Redisplay the question voting form.
         return render(
             request,
-            "polls/detail.html",
+            "polls/index.html",
             {
+                "content_page": "polls/detail.html",
                 "question": question,
                 "error_message": "You didn't select a choice.",
             },
