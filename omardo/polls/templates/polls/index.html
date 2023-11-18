@@ -1,16 +1,12 @@
 {% extends "main/base.html" %}
 {% load static %}
 
-{% block extrastylesheet %}<link rel="stylesheet" href="{% static 'polls/style.css' %}" />{% endblock %}
+{% block extrastylesheet %}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}" />
+<script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
+
+{% endblock %}
 
 {% block content %}
-	{% if latest_question_list %}
-	<ul>
-	{% for question in latest_question_list %}
-	<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-	{% endfor %}
-	</ul>
-	{% else %}
-	<p>No polls are available.</p>
-	{% endif %}
+	{% include content_page %}
 {% endblock %}
