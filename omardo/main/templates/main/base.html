@@ -10,7 +10,9 @@
 	<title>{% block title %}Sitio de Omar{% endblock %}</title>
 </head>
 <body class="h-full" >
-    {% include "main/sidebar.html" %}
+    {% block sidebar %}
+        {% include "main/sidebar.html" %}
+    {% endblock %}
 	<div class="py-10">
 		<header>
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
