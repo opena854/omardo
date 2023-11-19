@@ -1,12 +1,57 @@
+{% load static %}
 <div>
-{% if latest_question_list %}
-<ul>
+<ul role="list" class="divide-y divide-gray-100">
 {% for question in latest_question_list %}
-<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+<li class="relative flex justify-between py-5">
+	<div class="flex gap-x-4 pr-6 sm:w-1/2 sm:flex-none">
+		<img class="h-12 w-12 flex-none rounded-sm bg-gray-50" src="{% static "main/ballot.png" %}" alt="">
+		<div class="min-w-0 flex-auto">
+		  <p class="text-sm font-semibold leading-6 text-gray-900">
+			<a href="{% url 'polls:detail' question.id %}">
+			  <span class="absolute inset-x-0 -top-px bottom-0"></span>
+			  {{ question.question_text }}
+			</a>
+		  </p>
+		  <p class="mt-1 flex text-xs leading-5 text-gray-500">
+			Creada el {{ question.pub_date }}
+		  </p>
+		</div>
+	</div>
+	<div class="flex items-center justify-between gap-x-4 sm:w-1/2 sm:flex-none">
+		<div class="hidden sm:block">
+			{% with question.votes_sum as votos %}
+			<p class="text-sm leading-6 text-gray-900">{{ votos }} {% if votos == 1 %}Voto{% else %}Votos{% endif %}</p>
+			<p class="mt-1 text-xs leading-5 text-gray-500">{{ question.choice_set.count }} Opciones</p>
+  
+			{% endwith %}
+		</div>
+		<svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+		  <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+		</svg>
+	</div>
+</li>
 {% endfor %}
+<li class="relative flex justify-between py-5">
+	<div class="flex gap-x-4 pr-6 sm:w-1/2 sm:flex-none">
+		<img class="h-12 w-12 flex-none rounded-sm bg-gray-50" src="{% static "main/add.png" %}" alt="">
+		<div class="min-w-0 flex-auto">
+		  <p class="text-sm font-semibold leading-6 text-gray-900">
+			<a href="{% url 'polls:add' %}">
+			  <span class="absolute inset-x-0 -top-px bottom-0"></span>
+			  Añadir pregunta. 👀
+			</a>
+		  </p>
+		  <p class="mt-1 flex text-xs leading-5 text-gray-500">
+			Acá puedes añadir tus propias preguntas.
+		  </p>
+		</div>
+	</div>
+	<div class="flex items-center justify-end gap-x-4 sm:w-1/2 sm:flex-none">
+		<svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+		  <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+		</svg>
+	</div>
+
+</li>
 </ul>
-{% else %}
-<p>No polls are available.</p>
-{% endif %}
-<a href="{% url 'polls:add' %}">Añadir pregunta. 👀</a>
 </div>

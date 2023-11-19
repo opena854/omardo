@@ -1,5 +1,5 @@
-from .logging import *
-from .base import *
+from omardo.logging import *
+from omardo.settings.base import *
 import os
 
 SECRET_KEY = os.environ["SECRET_KEY"]

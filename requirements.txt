@@ -3,3 +3,4 @@ psycopg2>=2.8
 tzdata==2023.3
 whitenoise==6.6.0
 django-tailwind==3.6.0
+django-htmx<2

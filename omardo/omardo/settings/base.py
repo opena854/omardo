@@ -29,10 +29,7 @@ LOCAL_APPS = [
     "main.apps.MainConfig",
 ]
 
-THIRDS_APPS = [
-    "tailwind",
-    "theme",
-]
+THIRDS_APPS = ["tailwind", "theme", "django_htmx"]
 
 TAILWIND_APP_NAME = "theme"
 
@@ -47,6 +44,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = "omardo.urls"

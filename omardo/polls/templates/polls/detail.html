@@ -1,13 +1,27 @@
+
 <form action="{% url 'polls:vote' question.id %}" method="post">
   {% csrf_token %}
-  <fieldset>
-    <legend><h1>{{ question.question_text }}</h1></legend>
-    {% if error_message %}
+  <p class="text-sm text-gray-500">Seleccione la opción más adecuada.</p> 
+  <fieldset class="my-4">
+    <legend class="sr-only">Opciones</legend>
+    
+	{% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
-    {% endif %} {% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-    {% endfor %}
+    {% endif %} 
+	<div class="space-y-4">
+	{% for choice in question.choice_set.all %}
+    <div class="flex items-center">
+        <input id="choice{{ forloop.counter }}" name="choice" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}" class="ml-3 block text-sm font-medium leading-6 text-gray-900">
+			{{ choice.choice_text }}
+		</label>
+    </div>
+	{% endfor %}
+	</div>
   </fieldset>
-  <input type="submit" value="Vote" />
+  
+  <button 
+  	type="submit" 
+  	class="rounded-0 bg-cyan-800 px-2.5 mt-4 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600" 
+  >Votar</button>
 </form>
