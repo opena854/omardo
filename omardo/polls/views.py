@@ -28,7 +28,11 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = "polls/detail.html"
+    template_name = "polls/index.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        kwargs["content_page"] = "polls/detail.html"
+        return super().get_context_data(**kwargs)
 
     def get_queryset(self):
         """
@@ -39,18 +43,23 @@ class DetailView(generic.DetailView):
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = "polls/results.html"
+    template_name = "polls/index.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        kwargs["content_page"] = "polls/results.html"
+        return super().get_context_data(**kwargs)
 
 
 def add(request):
     return render(
-        request, 
+        request,
         "polls/index.html",
-        { 
-            "content_page": "polls/add.html" ,
+        {
+            "content_page": "polls/add.html",
         },
     )
- 
+
+
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
