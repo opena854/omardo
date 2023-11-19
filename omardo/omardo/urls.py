@@ -24,5 +24,7 @@ urlpatterns = [
     path("", include("main.urls")),
     path("polls/", include("polls.urls")),
     path("admin/", admin.site.urls),
-    path("__reload__/", include("django_browser_reload.urls")),
+    path("__reload__/", include("django_browser_reload.urls"))
+    if (settings.DEBUG)
+    else None,
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
