@@ -14,6 +14,13 @@ DATABASES = {
     }
 }
 
+DEVELOPMENT_APPS = [
+    "tailwind",
+    "django_browser_reload",
+] 
+
+INSTALLED_APPS = INSTALLED_APPS + DEVELOPMENT_APPS
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
