@@ -1,6 +1,6 @@
 from typing import Any
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -50,12 +50,14 @@ class ResultsView(generic.DetailView):
         return super().get_context_data(**kwargs)
 
 
-def add(request):
+def add(request: HttpRequest):
+    content = "polls/notyet.html" if request.method == "POST" else "polls/add.html"
+
     return render(
         request,
         "polls/index.html",
         {
-            "content_page": "polls/add.html",
+            "content_page": content,
         },
     )
 
