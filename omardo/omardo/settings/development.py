@@ -15,7 +15,6 @@ DATABASES = {
 }
 
 DEVELOPMENT_APPS = [
-    "tailwind",
     "django_browser_reload",
 ]
 

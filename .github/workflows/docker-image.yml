@@ -31,6 +31,7 @@ jobs:
         host: ${{ secrets.CASA_HOST }}
         username: ${{ secrets.CASA_USERNAME }}
         key: ${{ secrets.CASA_KEY }}
+        command_timeout: "300s"
         script: |
           cd /casa/omardo
           echo ${{ secrets.CASA_PASSWORD }} | sudo -S sh refresh.sh

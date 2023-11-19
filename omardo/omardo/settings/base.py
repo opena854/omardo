@@ -30,6 +30,7 @@ LOCAL_APPS = [
 ]
 
 THIRDS_APPS = [
+    "tailwind",
     "theme",
 ]
 
