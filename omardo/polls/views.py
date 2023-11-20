@@ -48,8 +48,11 @@ class ResultsView(generic.DetailView):
     template_name = "polls/index.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        kwargs["content_page"] = "polls/results.html"
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context["content_page"] = "polls/results.html"
+        context["header"] = kwargs["object"]
+        context["subheader"] = "Respuestas"
+        return context
 
 
 def add(request: HttpRequest):

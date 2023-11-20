@@ -1,9 +1,24 @@
-<h1>{{ question.question_text }}</h1>
 
-<ul>
-  {% for choice in question.choice_set.all %}
-  <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-  {% endfor %}
-</ul>
+<div class="flow-root">
+	<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 border-black rounded-lg border">
+		<table class="min-w-full divide-y divide-gray-300">
+			<tbody class="divide-y divide-gray-200">	
+				{% with question.votes_sum as total %}
+				{% for choice in question.choice_set.all %}
+				<tr>
+					<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+						{{ choice.choice_text }}
+					</td>
+					<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-700">
+						{% comment %} {{ choice.votes }} voto{{ choice.votes|pluralize }} {% endcomment %}
+						{{ choice.votes }} voto{{ choice.votes|pluralize }}
+					</td>
+				</tr>
+				{% endfor %}
+				{% endwith %}
+			</tbody>
+		</table>
+	</div>
+</div>
+	
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>

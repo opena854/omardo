@@ -20,7 +20,7 @@
 	<div class="flex items-center justify-between gap-x-4 sm:w-1/2 sm:flex-none">
 		<div class="hidden sm:block">
 			{% with question.votes_sum as votos %}
-			<p class="text-sm leading-6 text-gray-900">{{ votos }} {% if votos == 1 %}Voto{% else %}Votos{% endif %}</p>
+			<p class="text-sm leading-6 text-gray-900">{{ votos }} Voto{{ votos|pluralize}}</p>
 			<p class="mt-1 text-xs leading-5 text-gray-500">{{ question.choice_set.count }} Opciones</p>
   
 			{% endwith %}
