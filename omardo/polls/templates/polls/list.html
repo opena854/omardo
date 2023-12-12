@@ -1,4 +1,8 @@
+{% extends "polls/_base.html" %}
+
 {% load static %}
+
+{% block content %}
 <div>
 <ul role="list" class="divide-y divide-gray-100">
 {% for question in latest_question_list %}
@@ -7,7 +11,8 @@
 		<img class="h-12 w-12 flex-none rounded-sm bg-gray-50" src="{% static "main/ballot.png" %}" alt="">
 		<div class="min-w-0 flex-auto">
 		  <p class="text-sm font-semibold leading-6 text-gray-900">
-			<a href="{% url 'polls:detail' question.id %}">
+			<a 	href="#" hx-get="{% url 'polls:detail' question.id %}"
+			>
 			  <span class="absolute inset-x-0 -top-px bottom-0"></span>
 			  {{ question.question_text }}
 			</a>
@@ -36,7 +41,7 @@
 		<img class="h-12 w-12 flex-none rounded-sm bg-gray-50" src="{% static "main/add.png" %}" alt="">
 		<div class="min-w-0 flex-auto">
 		  <p class="text-sm font-semibold leading-6 text-gray-900">
-			<a href="{% url 'polls:add' %}">
+			<a href="#" hx-get="{% url 'polls:add' %}">
 			  <span class="absolute inset-x-0 -top-px bottom-0"></span>
 			  Añadir pregunta. 👀
 			</a>
@@ -55,3 +60,4 @@
 </li>
 </ul>
 </div>
+{% endblock %}

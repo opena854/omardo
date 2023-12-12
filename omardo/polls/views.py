@@ -1,20 +1,16 @@
 from typing import Any
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-
 from .models import Question, Choice
+from django_htmx.http import HttpResponseClientRedirect, retarget
 
 
 class IndexView(generic.ListView):
-    template_name = "polls/index.html"
+    template_name = "polls/list.html"
     context_object_name = "latest_question_list"
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        kwargs["content_page"] = "polls/list.html"
-        return super().get_context_data(**kwargs)
 
     def get_queryset(self):
         """
@@ -28,10 +24,9 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = "polls/index.html"
+    template_name = "polls/detail.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        kwargs["content_page"] = "polls/detail.html"
         context = super().get_context_data(**kwargs)
         context["header"] = kwargs["object"]
         return context
@@ -45,41 +40,38 @@ class DetailView(generic.DetailView):
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = "polls/index.html"
+    template_name = "polls/results.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["content_page"] = "polls/results.html"
+
         context["header"] = kwargs["object"]
         context["subheader"] = "Respuestas"
         return context
 
 
 def add(request: HttpRequest):
-    content = "polls/notyet.html" if request.method == "POST" else "polls/add.html"
-
+    template = "polls/notyet.html" if request.method == "POST" else "polls/add.html"
     return render(
         request,
-        "polls/index.html",
-        {
-            "content_page": content,
-        },
+        template,
+        {},
     )
 
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
         return render(
             request,
-            "polls/index.html",
+            "polls/detail.html",
             {
-                "content_page": "polls/detail.html",
                 "question": question,
-                "error_message": "You didn't select a choice.",
+                "header": question,
+                "error_message": "Debes seleccionar una opción.",
             },
         )
     else:

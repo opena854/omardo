@@ -1,13 +1,21 @@
+{% extends "polls/_base.html" %}
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
+{% block content %}
+
+<form 
+	hx-post="{% url 'polls:vote' question.id %}"
+	action="{% url 'polls:vote' question.id %}" 
+	method="post"
+	
+>
   {% csrf_token %}
   <p class="text-sm text-gray-500">Seleccione la opción más adecuada.</p> 
   <fieldset class="my-4">
     <legend class="sr-only">Opciones</legend>
     
-	{% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-    {% endif %} 
+	{% comment %} {% if error_message %} {% endcomment %}
+    <p id="error-message"><strong>{{ error_message }}</strong></p>
+    {% comment %} {% endif %}  {% endcomment %}
 	<div class="space-y-4">
 	{% for choice in question.choice_set.all %}
     <div class="flex items-center">
@@ -25,3 +33,5 @@
   	class="rounded-0 bg-cyan-800 px-2.5 mt-4 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600" 
   >Votar</button>
 </form>
+
+{% endblock %}
