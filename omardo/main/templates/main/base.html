@@ -34,7 +34,7 @@
 		<main >
 			<div id="content" hx-select="#content" hx-target="#content" hx-swap="outerHTML" hx-push-url="true" class="mx-auto mb-auto max-w-7xl px-6 lg:px-8 py-8">
 			{% block content %}
-			<p>Aquí es donde te doy la bienvenida. 😊</p>
+			<p hx-get="/" hx-trigger="click, every {{ delayinterval }}m" >Aquí es {{ adverbio }} te {{ accion }}. {{emoji}}</p>
 			{% endblock %}
 			</div>
 		</main>

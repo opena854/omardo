@@ -1,11 +1,21 @@
 from typing import Any
+from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
+from django.views.generic.edit import CreateView
 from django.utils import timezone
+
+# from omardo.polls.forms import QuestionForm
 from .models import Question, Choice
 from django_htmx.http import HttpResponseClientRedirect, retarget
+
+
+# class AddView(CreateView):
+#     model = Question
+#     form_class = QuestionForm
+#     template_name = "polls/add.html"
 
 
 class IndexView(generic.ListView):
