@@ -19,9 +19,6 @@ class Question(models.Model):
 
     def votes_sum(self):
         return self.choice_set.aggregate(models.Sum("votes"))["votes__sum"]
-        return Choice.objects.aggregate(
-            votes__sum=models.Sum("votes", filter=models.Q(question=self.pk))
-        )["votes__sum"]
 
     def was_published_recently(self):
         now = timezone.now()

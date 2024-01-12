@@ -27,6 +27,7 @@ BASE_APPS = [
 LOCAL_APPS = [
     "polls.apps.PollsConfig",
     "main.apps.MainConfig",
+    "shortener.apps.ShortenerConfig",
 ]
 
 THIRDS_APPS = ["tailwind", "theme", "django_htmx"]
