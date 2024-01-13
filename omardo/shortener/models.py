@@ -26,7 +26,7 @@ class IntToBase:
 
 
 class User(models.Model):
-    key = models.UUIDField(default=uuid4)
+    key = models.UUIDField(default=uuid4, unique=True)
     email = models.EmailField("Correo Electrónico", max_length=254, null=True)
     email_verified = models.BooleanField(default=False)
     created = models.DateTimeField()
@@ -36,27 +36,27 @@ class User(models.Model):
 
 
 class ShortUrl(models.Model):
-    key = models.CharField(max_length=20)
-    url = models.URLField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    def exists(key):
+        return ShortUrl.objects.filter(key=key).exists()
 
-    def exists(self, key):
-        return self.objects.filter(key=key).exists()
-
-    def generate_key(self):
+    def generate_key():
         letters = string.digits + string.ascii_lowercase
         base = uuid4().hex
 
         for i in range(0, 24):
             key_int = int(base[i : i + 8], 16)
-            key_test = [letters[a] for a in IntToBase(key_int, len(letters))]
+            key_test = "".join([letters[a] for a in IntToBase(key_int, len(letters))])
 
-            if self.exists(key_test):
+            if not ShortUrl.exists(key_test):
                 break
         else:
-            raise Exception("Could not generate short name this time, please retry.")
+            raise Exception("Please retry.")
 
         return key_test
 
+    key = models.CharField(max_length=20, default=generate_key, unique=True)
+    url = models.URLField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
-        return "{url_base}/{key}".format(url_base="https://omar.do", key=self.key)
+        return "{url_base}/_/{key}".format(url_base="https://omar.do", key=self.key)
